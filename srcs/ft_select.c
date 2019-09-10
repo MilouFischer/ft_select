@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 11:34:24 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/03 16:40:41 by efischer         ###   ########.fr       */
+/*   Updated: 2019/09/10 17:43:27 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,26 @@ static void	cl_screen(void)
 	}
 }
 
+static void	raw_mode(void)
+{
+	struct termios	raw;
+
+	tcgetattr(0, &raw);
+	raw.c_lflag &= ~(ECHO | ICANON);
+	tcsetattr(0, TCSAFLUSH, &raw);
+}
+
 static void	ft_select(char **av)
 {
-	char	buf[BUF_SIZE];
-	int		ret;
+	char	buf;
 
-	while (1)
+	raw_mode();
+	cl_screen();
+	ft_print_tab(av);
+	while (read(0, &buf, 1) > 0 && buf != 'q')
 	{
 		cl_screen();
 		ft_print_tab(av);
-		tputs(tgetstr("\E", NULL), 1, put_termcap);
-		if ((ret = read(0, &buf, BUF_SIZE)) >= 0)
-			buf[ret] = '\0';
-		ft_putendl(buf);
 	}
 }
 
