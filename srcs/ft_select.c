@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 11:34:24 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/10 18:40:24 by efischer         ###   ########.fr       */
+/*   Updated: 2019/09/11 17:22:56 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,31 +31,46 @@ static void	cl_screen(void)
 	}
 }
 
-static void	raw_mode(void)
+static void	raw_mode_on(struct termios *old_tty)
 {
-	struct termios	raw;
+	struct termios	tty;
 
-	tcgetattr(0, &raw);
-	raw.c_lflag &= ~(ECHO | ICANON);
-	tcsetattr(0, TCSAFLUSH, &raw);
+	tcgetattr(0, old_tty);
+	tty = *old_tty;
+	tty.c_lflag &= ~(ECHO | ICANON);
+	tty.c_cc[VMIN] = 1;
+	tty.c_cc[VTIME] = 1;
+	tcsetattr(0, TCSAFLUSH, &tty);
 }
 
-static void	ft_select(char **av)
+static void	raw_mode_off(struct termios old_tty)
 {
-	char	buf;
+	tcsetattr(0, TCSAFLUSH, &old_tty);
+}
 
-	raw_mode();
+static int	ft_select(char **av, t_cap cap)
+{
+	struct termios	old_tty;
+	char			buf[BUF_SIZE];
+	int				ret;
+
+	raw_mode_on(&old_tty);
 	cl_screen();
 	ft_print_tab(av);
-	while (read(0, &buf, 1) > 0 && buf != 'q')
+	while ((ret = read(0, &buf, BUF_SIZE)) > 0)
 	{
+		buf[ret] = '\0';
+		manage_key(buf, cap);
 		cl_screen();
 		ft_print_tab(av);
 	}
+	raw_mode_off(old_tty);
+	return (ret);
 }
 
 int			main(int ac, char **av)
 {
+	t_cap	cap;
 	int		ret;
 
 	if (ac < 2)
@@ -64,7 +79,8 @@ int			main(int ac, char **av)
 		exit(EXIT_FAILURE);
 	}
 	ret = init_entry();
+	init_cap(&cap);
 	if (ret == TRUE)
-		ft_select(av + 1);
+		ft_select(av + 1, cap);
 	return (ret);
 }

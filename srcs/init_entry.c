@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 15:28:29 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/03 15:28:32 by efischer         ###   ########.fr       */
+/*   Updated: 2019/09/11 17:28:35 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,19 @@ int		init_entry(void)
 	else if (ret == 0)
 		ft_dprintf(2, "%s not defined in termcap database", term);
 	return (ret);
+}
+
+void	init_cap(t_cap *cap)
+{
+	ft_bzero(cap, sizeof(cap));
+	if (tgetflag("cl") == SUCCESS)
+		cap->cl = tgetstr("cl", NULL);
+	if (tgetflag("ku") == SUCCESS)
+		cap->ku = tgetstr("ku", NULL);
+	if (tgetflag("kd") == SUCCESS)
+		cap->kd = tgetstr("kd", NULL);
+	if (tgetflag("kl") == SUCCESS)
+		cap->kl = tgetstr("kl", NULL);
+	if (tgetflag("kr") == SUCCESS)
+		cap->kr = tgetstr("kr", NULL);
 }
