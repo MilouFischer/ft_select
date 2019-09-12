@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   manage_key.c                                       :+:      :+:    :+:   */
+/*   list_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/11 12:00:25 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/11 17:28:29 by efischer         ###   ########.fr       */
+/*   Created: 2019/09/12 16:48:32 by efischer          #+#    #+#             */
+/*   Updated: 2019/09/12 17:12:47 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-void	manage_key(char	*buf, t_cap cap)
+void	get_list(t_list **lst, char **av)
 {
-	if (ft_strequ(buf, cap.ku) == TRUE)
-		ft_putendl("Up");
-	else if (ft_strequ(buf, cap.kd) == TRUE)
-		ft_putendl("Down");
-	else if (ft_strequ(buf, cap.kr) == TRUE)
-		ft_putendl("Right");
-	else if (ft_strequ(buf, cap.kl) == TRUE)
-		ft_putendl("Left");
-	else
-		ft_printf("cap.ku: %s, cap.kd: %s, cap.kr: %s, cap.kl: %s\n",
-				cap.ku, cap.kd, cap.kr, cap.kl);
+	t_select	select;
+	size_t		i;
+
+	i = 0;
+	while (av[i] != NULL)
+	{
+		ft_bzero(&select, sizeof(select));
+		select.arg = av[i];
+		ft_lstaddend(lst, ft_lstnew(&select, sizeof(select)));
+		i++;
+	}
+}
+
+void	print_list(t_list *lst, t_list **elem)
+{
+	char	*new;
+
+	new = ((t_select*)(lst->content))->arg;
+	new = ft_strjoin(new, "\n");
+	*elem = ft_lstnew(new, ft_strlen(new));
 }

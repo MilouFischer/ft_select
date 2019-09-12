@@ -5,82 +5,59 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/03 11:34:24 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/11 17:22:56 by efischer         ###   ########.fr       */
+/*   Created: 2019/09/12 16:33:43 by efischer          #+#    #+#             */
+/*   Updated: 2019/09/12 17:30:31 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-static int	put_termcap(int	termcap)
-{
-	int		ret;
-
-	ret = ft_putchar((char)termcap);
-	return (ret);
-}
-
-static void	cl_screen(void)
-{
-	char	*cl_cap;
-
-	if (tgetflag("cl") == SUCCESS)
-	{
-		cl_cap = tgetstr("cl", NULL);
-		tputs(cl_cap, 1, put_termcap);
-	}
-}
-
-static void	raw_mode_on(struct termios *old_tty)
+static void	canonic_mode_on(struct termios *old_tty)
 {
 	struct termios	tty;
 
-	tcgetattr(0, old_tty);
-	tty = *old_tty;
+	tcgetattr(0, &tty);
+	*old_tty = tty;
 	tty.c_lflag &= ~(ECHO | ICANON);
 	tty.c_cc[VMIN] = 1;
 	tty.c_cc[VTIME] = 1;
 	tcsetattr(0, TCSAFLUSH, &tty);
 }
 
-static void	raw_mode_off(struct termios old_tty)
+static void	canonic_mode_off(struct termios old_tty)
 {
 	tcsetattr(0, TCSAFLUSH, &old_tty);
 }
 
-static int	ft_select(char **av, t_cap cap)
+static void	ft_select(t_list *lst)
 {
-	struct termios	old_tty;
-	char			buf[BUF_SIZE];
-	int				ret;
+	char	buf[READ_SIZE];
+	ssize_t	ret;
 
-	raw_mode_on(&old_tty);
-	cl_screen();
-	ft_print_tab(av);
-	while ((ret = read(0, &buf, BUF_SIZE)) > 0)
+	ft_lstprint(lst, print_list);
+	while ((ret = read(0, buf, READ_SIZE)) >= 0)
 	{
 		buf[ret] = '\0';
-		manage_key(buf, cap);
-		cl_screen();
-		ft_print_tab(av);
+		ft_lstprint(lst, print_list);
 	}
-	raw_mode_off(old_tty);
-	return (ret);
 }
 
-int			main(int ac, char **av)
+int		main(int ac, char **av)
 {
-	t_cap	cap;
-	int		ret;
+	struct termios	old_tty;
+	t_list			*lst;
+	int				ret;
 
+	lst = NULL;
 	if (ac < 2)
 	{
-		ft_putendl_fd("usage: ft_select ...", 2);
-		exit(EXIT_FAILURE);
+		ft_putendl_fd("Usage: ft_select ...", 2);
+		return (EXIT_SUCCESS);
 	}
-	ret = init_entry();
-	init_cap(&cap);
-	if (ret == TRUE)
-		ft_select(av + 1, cap);
+	get_list(&lst, av + 1);
+	canonic_mode_on(&old_tty);
+	if ((ret = init_entry()) == TRUE)
+		ft_select(lst);
+	canonic_mode_off(old_tty);
 	return (ret);
 }

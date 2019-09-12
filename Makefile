@@ -6,7 +6,7 @@
 #    By: efischer <efischer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/03 09:30:54 by efischer          #+#    #+#              #
-#    Updated: 2019/09/11 12:08:24 by efischer         ###   ########.fr        #
+#    Updated: 2019/09/12 16:58:34 by efischer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,13 +31,15 @@ CC = clang
 CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -Werror
+#CFLAGS += -pedantic
+#CFLAGS += -Wpadded
 COMPILE = $(CC) -c
 
 #=====================================SRCS======================================
 
 SRCS += ft_select.c 
-SRCS += init_entry.c
-SRCS += manage_key.c
+SRCS += list_functions.c
+SRCS += init.c
 
 #=====================================OBJS======================================
 
