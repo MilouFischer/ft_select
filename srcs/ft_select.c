@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 16:33:43 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/12 17:30:31 by efischer         ###   ########.fr       */
+/*   Updated: 2019/09/12 18:03:56 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ static void	ft_select(t_list *lst)
 	char	buf[READ_SIZE];
 	ssize_t	ret;
 
+	cl_screen();
 	ft_lstprint(lst, print_list);
 	while ((ret = read(0, buf, READ_SIZE)) >= 0)
 	{
 		buf[ret] = '\0';
+		cl_screen();
 		ft_lstprint(lst, print_list);
 	}
 }

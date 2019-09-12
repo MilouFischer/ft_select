@@ -6,7 +6,7 @@
 #    By: efischer <efischer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/03 09:30:54 by efischer          #+#    #+#              #
-#    Updated: 2019/09/12 16:58:34 by efischer         ###   ########.fr        #
+#    Updated: 2019/09/12 17:42:59 by efischer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ COMPILE = $(CC) -c
 SRCS += ft_select.c 
 SRCS += list_functions.c
 SRCS += init.c
+SRCS += termcap.c
 
 #=====================================OBJS======================================
 

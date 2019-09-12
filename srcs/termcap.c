@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_functions.c                                   :+:      :+:    :+:   */
+/*   termcap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/12 16:48:32 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/12 18:03:52 by efischer         ###   ########.fr       */
+/*   Created: 2019/09/12 17:35:18 by efischer          #+#    #+#             */
+/*   Updated: 2019/09/12 18:03:55 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-void	get_list(t_list **lst, char **av)
+static int	print_cap(int cap)
 {
-	t_select	select;
-	size_t		i;
-
-	i = 0;
-	while (av[i] != NULL)
-	{
-		ft_bzero(&select, sizeof(select));
-		select.arg = av[i];
-		ft_lstaddend(lst, ft_lstnew(&select, sizeof(select)));
-		i++;
-	}
+	return (ft_putchar(cap));
 }
 
-void	print_list(t_list *lst, t_list **elem)
+void		cl_screen(void)
 {
-	char	*new;
+	char	*cl_cap;
 
-	new = ((t_select*)(lst->content))->arg;
-	new = ft_strjoin(new, "\n");
-	*elem = ft_lstnew(new, ft_strlen(new));
+	if (tgetflag("cl") == 0)
+	{
+		cl_cap = tgetstr("cl", NULL);
+		tputs(cl_cap, 1, print_cap);
+	}
 }
