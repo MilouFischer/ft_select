@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 17:35:18 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/18 17:07:52 by efischer         ###   ########.fr       */
+/*   Updated: 2019/09/18 17:34:15 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void		cl_screen(void)
 
 void		get_termcap(t_termcap *termcap)
 {
-		termcap->af = tgoto(tgetstr(T_AF, NULL), 0, 1);
-		termcap->ab = tgoto(tgetstr(T_AB, NULL), 0, 7);
+		termcap->so = tgetstr(T_SO, NULL);
 		termcap->us = tgetstr(T_US, NULL);
 		termcap->me = tgetstr(T_ME, NULL);
 }

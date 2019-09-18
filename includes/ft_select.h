@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 11:45:33 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/18 16:58:36 by efischer         ###   ########.fr       */
+/*   Updated: 2019/09/18 17:34:04 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,13 @@
 # define K_LEFT		"\E[D"
 # define K_ESC		"\E"
 # define K_SPACE	" "
-# define T_AB	"AB"
-# define T_AF	"AF"
+# define T_SO	"so"
 # define T_US	"us"
 # define T_ME	"me"
 # define T_CO   "co"
 # define T_LI	"li"
 # define T_CL	"cl"
-# define F_AB	0x00000001
+# define F_SO	0x00000001
 # define F_US	0x00000002
 # define F_ME	0x00000004
 
@@ -57,8 +56,7 @@ typedef struct		s_select
 
 typedef struct		s_termcap
 {
-		char		*ab;
-		char		*af;
+		char		*so;
 		char		*us;
 		char		*me;
 }					t_termcap;
