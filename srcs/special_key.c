@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   special_key.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/12 16:40:56 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/12 17:13:26 by efischer         ###   ########.fr       */
+/*   Created: 2019/09/18 13:37:23 by efischer          #+#    #+#             */
+/*   Updated: 2019/09/18 16:45:53 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-int		init_entry(void)
+void	quit(t_list *lst, t_list *curs, t_machine *machine)
 {
-	char	*term;
-	int		ret;
+	(void)lst;
+	(void)curs;
+	ft_lstdel(&lst, del_list);
+	machine->state = ST_END;
+}
 
-	term = getenv("TERM");
-	ret = tgetent(NULL, term);
-	if (term == NULL)
-		ft_putendl_fd("TERM not set", 2);
-	else if (ret == -1)
-		ft_putendl_fd("Termcap database not found", 2);
-	else if (ret == 0)
-		ft_putendl_fd("Terminal type undefined in termcap database", 2);
-	return (ret);
+void	select_elem(t_list *lst, t_list *curs, t_machine *machine)
+{
+	(void)lst;
+	(void)machine;
+	if ((((t_select*)(curs->content))->flag & F_AB) == F_AB)
+		((t_select*)(curs->content))->flag &= ~(F_AB);
+	else
+		((t_select*)(curs->content))->flag |= F_AB;
 }

@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 16:48:32 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/12 18:03:52 by efischer         ###   ########.fr       */
+/*   Updated: 2019/09/18 14:38:16 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,10 @@ void	print_list(t_list *lst, t_list **elem)
 	new = ((t_select*)(lst->content))->arg;
 	new = ft_strjoin(new, "\n");
 	*elem = ft_lstnew(new, ft_strlen(new));
+}
+
+void	del_list(void *content, size_t content_size)
+{
+	(void)content_size;
+	ft_memdel(&content);
 }
