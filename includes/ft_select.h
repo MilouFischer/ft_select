@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 11:45:33 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/18 17:34:04 by efischer         ###   ########.fr       */
+/*   Updated: 2019/09/19 11:34:20 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include <curses.h>
 # include <term.h>
+# include <sys/ioctl.h>
 
 # define READ_SIZE	8
 # define NB_FCT		3
@@ -50,8 +51,11 @@ typedef struct		s_machine
 
 typedef struct		s_select
 {
-		char		*arg;
 		uint64_t	flag;
+		char		*arg;
+		int			pad;
+		int			x;
+		int			y;
 }					t_select;
 
 typedef struct		s_termcap
@@ -59,6 +63,8 @@ typedef struct		s_termcap
 		char		*so;
 		char		*us;
 		char		*me;
+		char		*co;
+		char		*li;
 }					t_termcap;
 
 typedef void	(t_state_fct)(t_list*, t_machine*);
@@ -80,5 +86,6 @@ void				st_print(t_list *lst, t_machine *machine);
 void				print_list(t_list *lst, t_list **elem);
 void				del_list(void *content, size_t content_size);
 void				cl_screen(void);
+void				column_display();
 
 #endif

@@ -6,7 +6,7 @@
 #    By: efischer <efischer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/03 09:30:54 by efischer          #+#    #+#              #
-#    Updated: 2019/09/18 16:21:28 by efischer         ###   ########.fr        #
+#    Updated: 2019/09/19 10:03:26 by efischer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRCS += st_end.c
 SRCS += move_cursor.c
 SRCS += special_key.c
 SRCS += termcap.c
+SRCS += column_display.c
 
 #=====================================OBJS======================================
 
