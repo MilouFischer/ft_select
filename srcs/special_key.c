@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 13:37:23 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/19 14:12:05 by efischer         ###   ########.fr       */
+/*   Updated: 2019/09/19 17:49:44 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,5 @@ void	select_elem(t_list *lst, t_list **curs, t_machine *machine)
 		((t_select*)((*curs)->content))->flag &= ~(F_SO);
 	else
 		((t_select*)((*curs)->content))->flag |= F_SO;
+	curs_down(lst, curs, machine);
 }

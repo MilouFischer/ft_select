@@ -2,3 +2,4 @@ main.c
 objs
 *.o
 *.sw*
+ft_select

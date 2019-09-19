@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 15:46:17 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/19 16:07:58 by efischer         ###   ########.fr       */
+/*   Updated: 2019/09/19 17:31:45 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 static void	check_x_y_max(int *x, int *y, t_list *lst)
 {
 	if (*x >= ((t_select*)(lst->content))->x_max
-		|| (*x + 1) * (*y + 1) > (int)ft_lstlen(lst))
+		|| *x * ((t_select*)(lst->content))->y_max + *y + 1
+		> (int)ft_lstlen(lst))
 	{
 		*x = 0;
 		*y += 1;
