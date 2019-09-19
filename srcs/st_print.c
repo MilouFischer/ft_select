@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 14:43:44 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/19 13:36:45 by efischer         ###   ########.fr       */
+/*   Updated: 2019/09/19 14:14:01 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	column_display(t_list *lst)
 				out = ft_join_free(out, ft_asprintf("%-*s", len + 1, " "), 3);
 			i += ((t_select*)(lst->content))->y_max;
 		}
+		cl_screen();
 		out = ft_join_free(out, "\n", 1);
 		y++;
 	}

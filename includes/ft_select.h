@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 11:45:33 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/19 13:35:33 by efischer         ###   ########.fr       */
+/*   Updated: 2019/09/19 14:11:26 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct		s_termcap
 }					t_termcap;
 
 typedef void	(t_state_fct)(t_list*, t_machine*);
-typedef void	(t_key_fct)(t_list*, t_list*, t_machine*);
+typedef void	(t_key_fct)(t_list*, t_list**, t_machine*);
 
 int					init_entry(void);
 void				get_list(t_list **lst, char **av);
@@ -78,12 +78,12 @@ void				get_termcap(t_termcap *termcap);
 void				ft_select(t_list *lst, t_machine *machine);
 void				st_input(t_list *lst, t_machine *machine);
 void				st_end(t_list *lst, t_machine *machine);
-void				curs_up(t_list *lst, t_list *curs, t_machine *machine);
-void				curs_down(t_list *lst, t_list *curs, t_machine *machine);
-void				curs_right(t_list *lst, t_list *curs, t_machine *machine);
-void				curs_left(t_list *lst, t_list *curs, t_machine *machine);
-void				quit(t_list *lst, t_list *curs, t_machine *machine);
-void				select_elem(t_list *lst, t_list *curs, t_machine *machine);
+void				curs_up(t_list *lst, t_list **curs, t_machine *machine);
+void				curs_down(t_list *lst, t_list **curs, t_machine *machine);
+void				curs_right(t_list *lst, t_list **curs, t_machine *machine);
+void				curs_left(t_list *lst, t_list **curs, t_machine *machine);
+void				quit(t_list *lst, t_list **curs, t_machine *machine);
+void				select_elem(t_list *lst, t_list **curs, t_machine *machine);
 void				st_print(t_list *lst, t_machine *machine);
 void				print_list(t_list *lst, t_list **elem);
 void				del_list(void *content, size_t content_size);
