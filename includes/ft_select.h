@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 11:45:33 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/19 11:34:20 by efischer         ###   ########.fr       */
+/*   Updated: 2019/09/19 13:35:33 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct		s_select
 		uint64_t	flag;
 		char		*arg;
 		int			pad;
+		int			x_max;
+		int			y_max;
 		int			x;
 		int			y;
 }					t_select;
@@ -87,5 +89,7 @@ void				print_list(t_list *lst, t_list **elem);
 void				del_list(void *content, size_t content_size);
 void				cl_screen(void);
 void				column_display();
+void				x_y_elem(t_list *lst);
+t_select			**get_arg_tab(t_list *lst, size_t *nb_arg);
 
 #endif

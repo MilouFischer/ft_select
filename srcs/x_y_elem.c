@@ -1,41 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   column_display.c                                   :+:      :+:    :+:   */
+/*   x_y_elem.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/19 09:53:50 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/19 12:05:20 by efischer         ###   ########.fr       */
+/*   Created: 2019/09/19 13:14:28 by efischer          #+#    #+#             */
+/*   Updated: 2019/09/19 13:39:52 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-char	*apply_flag(t_select *elem)
+static void		elem_to_list(t_list *lst, t_select **elem)
 {
-	static t_termcap	termcap;
-	char				*str;
-	char				*tmp;
+	size_t	i;
 
-	get_termcap(&termcap);
-	str = ft_strdup(elem->arg);
-	if ((elem->flag & F_SO) == F_SO)
+	i = 0;
+	while (lst != NULL)
 	{
-		tmp = str;
-		str = ft_asprintf("%s%s%s", termcap.so, tmp, termcap.me);
-		ft_strdel(&tmp);
+		lst->content = elem[i];
+		lst = lst->next;
+		i++;
 	}
-	if ((elem->flag & F_US) == F_US)
-	{
-		tmp = str;
-		str = ft_asprintf("%s%s%s", termcap.us, tmp, termcap.me);
-		ft_strdel(&tmp);
-	}
-	return (str);
 }
 
-static t_select	**get_arg_tab(t_list *lst, size_t *nb_arg)
+t_select		**get_arg_tab(t_list *lst, size_t *nb_arg)
 {
 	t_select	**elem;
 	size_t		i;
@@ -68,25 +58,12 @@ static size_t	get_total_line(t_select **elem, size_t nb_arg)
 	return (total_line);
 }
 
-static void		fill_line(char **buf, t_select *elem)
-{
-	char	*str;
-	size_t	len;
-
-	len = elem->pad - ft_strlen(elem->arg);
-	str = apply_flag(elem);
-	*buf = ft_join_free(*buf, str, 3);
-	*buf = ft_join_free(*buf, ft_asprintf("%-*s", len + 1, " "), 3);
-}
-
-static void		print_column(t_select **elem, size_t nb_arg)
+static void		get_x_y_for_each(t_select **elem, size_t nb_arg)
 {
 	size_t	total_line;
 	size_t	nb_line;
 	size_t	i;
-	char	*buf;
 
-	buf = NULL;
 	total_line = get_total_line(elem, nb_arg);
 	nb_line = 0;
 	while (nb_line < total_line)
@@ -94,18 +71,17 @@ static void		print_column(t_select **elem, size_t nb_arg)
 		i = nb_line;
 		while (i < nb_arg)
 		{
-			fill_line(&buf, elem[i]);
+			elem[i]->x = (i - nb_line) / total_line;
+			elem[i]->y = nb_line;
+			elem[i]->x_max = nb_arg / total_line;
+			elem[i]->y_max = total_line;
 			i += total_line;
 		}
-		buf = ft_join_free(buf, "\n", 1);
 		nb_line++;
 	}
-	cl_screen();
-	ft_putstr(buf);
-	ft_strdel(&buf);
 }
 
-void			column_display(t_list *lst)
+void			x_y_elem(t_list *lst)
 {
 	t_select		**elem;
 	size_t			nb_arg;
@@ -113,6 +89,7 @@ void			column_display(t_list *lst)
 	elem = get_arg_tab(lst, &nb_arg);
 	if (elem == NULL || (*elem)->pad - 1 <= 0)
 		return ;
-	print_column(elem, nb_arg);
+	get_x_y_for_each(elem, nb_arg);
+	elem_to_list(lst, elem);
 	free(elem);
 }
