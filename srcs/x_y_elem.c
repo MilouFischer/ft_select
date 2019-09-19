@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 13:14:28 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/19 13:58:37 by efischer         ###   ########.fr       */
+/*   Updated: 2019/09/19 14:24:20 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void		get_x_y_for_each(t_select **elem, size_t nb_arg)
 		{
 			elem[i]->x = (i - nb_line) / total_line;
 			elem[i]->y = nb_line;
-			elem[i]->x_max = nb_arg / total_line + 0.5;
+			elem[i]->x_max = nb_arg / total_line + nb_arg % total_line;
 			elem[i]->y_max = total_line;
 			i += total_line;
 		}
