@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 13:14:28 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/19 14:24:20 by efischer         ###   ########.fr       */
+/*   Updated: 2019/09/19 17:07:27 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,16 @@ t_select		**get_arg_tab(t_list *lst, size_t *nb_arg)
 static size_t	get_total_line(t_select **elem, size_t nb_arg)
 {
 	size_t			nb_max_arg_by_line;
-	size_t			total_line;
+	float			total_line;
 	struct winsize	ws;
 
 	total_line = 1;
 	ioctl(0, TIOCGWINSZ, &ws);
-	nb_max_arg_by_line = ws.ws_col / (*elem)->pad;
+	nb_max_arg_by_line = ws.ws_col / ((*elem)->pad + 1);
 	if (nb_max_arg_by_line != 0)
-		total_line = nb_arg / nb_max_arg_by_line + 1;
+		total_line = nb_arg / nb_max_arg_by_line;
+	if (nb_arg % nb_max_arg_by_line != 0)
+		total_line++;
 	return (total_line);
 }
 
