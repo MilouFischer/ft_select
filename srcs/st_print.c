@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 14:43:44 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/19 16:08:11 by efischer         ###   ########.fr       */
+/*   Updated: 2019/09/20 11:40:28 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,23 @@ void	column_display(t_list *lst)
 	str = NULL;
 	out = NULL;
 	elem = get_arg_tab(lst, &nb_arg);
-	while (y < ((t_select*)(lst->content))->y_max)
+	while (y < glob.y_max)
 	{
 		i = y;
 		while (i < nb_arg)
 		{
-			len = ((t_select*)(lst->content))->pad - ft_strlen(elem[i]->arg);
+			len = glob.pad - ft_strlen(elem[i]->arg);
 			str = apply_flag(elem[i]);	
 			out = ft_join_free(out, str, 3);
-			if (elem[i]->x != elem[i]->x_max)
+			if (elem[i]->x != glob.x_max)
 				out = ft_join_free(out, ft_asprintf("%-*s", len + 1, " "), 3);
-			i += ((t_select*)(lst->content))->y_max;
+			i += glob.y_max;
 		}
 		cl_screen();
 		out = ft_join_free(out, "\n", 1);
 		y++;
 	}
-	ft_putstr(out);
+	ft_putstr_fd(out, 2);
 	ft_strdel(&out);
 	free(elem);
 }

@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 16:48:32 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/19 12:24:53 by efischer         ###   ########.fr       */
+/*   Updated: 2019/09/20 11:26:43 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void		get_list(t_list **lst, char **av)
 	{
 		ft_bzero(&select, sizeof(select));
 		select.arg = av[i];
-		select.pad = pad;
+		glob.pad = pad;
 		ft_lstaddend(lst, ft_lstnew(&select, sizeof(select)));
 		i++;
 	}

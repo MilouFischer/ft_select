@@ -6,7 +6,7 @@
 #    By: efischer <efischer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/03 09:30:54 by efischer          #+#    #+#              #
-#    Updated: 2019/09/19 15:52:43 by efischer         ###   ########.fr        #
+#    Updated: 2019/09/20 12:06:39 by efischer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRCS += ft_select.c
 SRCS += list_functions.c
 SRCS += st_input.c
 SRCS += st_print.c
+SRCS += st_err.c
 SRCS += st_end.c
 SRCS += move_cursor_up.c
 SRCS += move_cursor_down.c
