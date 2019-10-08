@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 14:43:44 by efischer          #+#    #+#             */
-/*   Updated: 2019/09/20 11:40:28 by efischer         ###   ########.fr       */
+/*   Updated: 2019/10/08 11:20:41 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,37 +37,15 @@ char	*apply_flag(t_select *elem)
 
 void	column_display(t_list *lst)
 {
-	t_select	**elem;
-	char		*str;
-	char		*out;	
-	size_t		nb_arg;
-	size_t		i;
-	size_t		len;
-	int			y;
+	char	*str;
 
-	y = 0;
-	str = NULL;
-	out = NULL;
-	elem = get_arg_tab(lst, &nb_arg);
-	while (y < glob.y_max)
+	cl_screen();
+	while (lst != NULL)
 	{
-		i = y;
-		while (i < nb_arg)
-		{
-			len = glob.pad - ft_strlen(elem[i]->arg);
-			str = apply_flag(elem[i]);	
-			out = ft_join_free(out, str, 3);
-			if (elem[i]->x != glob.x_max)
-				out = ft_join_free(out, ft_asprintf("%-*s", len + 1, " "), 3);
-			i += glob.y_max;
-		}
-		cl_screen();
-		out = ft_join_free(out, "\n", 1);
-		y++;
+		str = apply_flag(lst->content);
+		ft_putendl(str);
+		lst = lst->next;
 	}
-	ft_putstr_fd(out, 2);
-	ft_strdel(&out);
-	free(elem);
 }
 
 void	st_print(t_list *lst, t_machine *machine)
